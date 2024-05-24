@@ -15,8 +15,8 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="")
-public class UserResponse {
+@Table(name="user")
+public class DonnerResponse {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Nonnull
@@ -29,7 +29,7 @@ public class UserResponse {
     private  String phoneNumber;
     @NotBlank(message = "BloodGroup field is required")
     private  String bloodGroup;
-
     private  String permanentAddress;
+    private String status;
 
 }
