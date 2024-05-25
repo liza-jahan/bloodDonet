@@ -1,10 +1,6 @@
 package com.example.blooddonet.model;
 
-import jakarta.annotation.Nonnull;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,13 +9,13 @@ import lombok.Setter;
 
 @Setter
 @Getter
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="user")
-public class DonnerResponse {
+public class DonnerRegistrationRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Nonnull
     private Long id;
     @NotBlank(message = "First name field is required")
     private String firstName;
@@ -30,6 +26,6 @@ public class DonnerResponse {
     @NotBlank(message = "BloodGroup field is required")
     private  String bloodGroup;
     private  String permanentAddress;
-    private String status;
+
 
 }
