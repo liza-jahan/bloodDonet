@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title> Blood donnet</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#">Blood Donnet List</a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/viewTDonnerList}">Blood Donner</a>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+
+<div class ="container">
+    <div class = "row">
+        <h1> List Donner </h1>
+    </div>
+
+    <div class = "row">
+        <div class = "col-lg-3">
+            <a th:href = "@{/donner/new}" class = "btn btn-primary btn-sm mb-3"> Add Donner</a>
+        </div>
+    </div>
+    <table class = "table table-striped table-bordered">
+        <thead class = "table-dark">
+        <tr>
+            <th> Donner First Name</th>
+            <th> Donner Last Name</th>
+            <th> PhoneNumber </th>
+            <th> Blood Group </th>
+            <th> Permanent Address </th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each = "donner:${viewTDonnerList}">
+            <td th:text = "${viewTDonnerList.firstName}"></td>
+            <td th:text = "${viewTDonnerList.lastName}"></td>
+            <td th:text = "${viewTDonnerList.phoneNumber}"></td>
+            <td th:text = "${viewTDonnerList.bloodGroup}"></td>
+            <td th:text = "${viewTDonnerList.phoneNumber}"></td>
+            <td th:text = "${viewTDonnerList.permanentAddress}"></td>
+            <td>
+                <a th:href = "@{/donner/edit/{id}(id=${donner/{id}})}"
+                   class = "btn btn-primary">Update</a>
+
+                <a th:href = "@{/donner/{id}(id=${deleteDonner/{id}})}"
+                   class = "btn btn-danger">Delete</a>
+
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+
+</div>
+</body>
+</html>

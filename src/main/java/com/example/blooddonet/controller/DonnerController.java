@@ -1,10 +1,10 @@
 package com.example.blooddonet.controller;
 
-import com.example.blooddonet.entity.DonnerEntity;
 import com.example.blooddonet.model.DonnerRegistrationRequest;
 import com.example.blooddonet.model.DonnerUpdateRequest;
-import com.example.blooddonet.service.DonnerService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.blooddonet.repository.DonnerRepository;
+import com.example.blooddonet.service.imp.DonnerServiceImp;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,16 +14,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("user")
+@RequiredArgsConstructor
 public class DonnerController {
 
 
-   @Autowired
-   private DonnerService service;
+
+   private final DonnerServiceImp service;
+   private final DonnerRepository donnerRepository;
 
     @GetMapping( "viewTDonnerList")
     public String viewAllDonnerList(Model model) {
         model.addAttribute("donner", service.getAllDonner());
-        return "ViewToDoList.jsp";
+        return "ViewPage";
     }
 
     @GetMapping("/donner/new")
@@ -42,7 +44,17 @@ public class DonnerController {
         return "ViewToDoList";
     }
 
-    @PostMapping("/donners/{id}")
+
+    @GetMapping("/donner/edit/{id}")
+    public String editDonnerForm(@PathVariable Long id, Model model) {
+       service.getDonnerDetails(id);
+        return "edit_donner";
+    }
+
+
+
+
+    @PostMapping("/donner/{id}")
     public String editDonnerList(@PathVariable Long id, DonnerUpdateRequest donnerUpdateRequest) {
        service.update(id,donnerUpdateRequest);
         return "EditToDonnerList.jsp";
@@ -50,7 +62,7 @@ public class DonnerController {
 
 
 
-    @GetMapping("/deleteToDoItem/{id}")
+    @GetMapping("/deleteDonner/{id}")
     public String deleteToDoItem(@PathVariable Long id) {
      service.deleteDonner(id);
         return "redirect:/viewToDoList.jsp";
