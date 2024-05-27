@@ -1,6 +1,8 @@
 package com.example.blooddonet.controller;
 
+import com.example.blooddonet.entity.DonnerEntity;
 import com.example.blooddonet.model.DonnerRegistrationRequest;
+import com.example.blooddonet.model.DonnerUpdateRequest;
 import com.example.blooddonet.service.DonnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,63 +20,39 @@ public class DonnerController {
    @Autowired
    private DonnerService service;
 
-    @GetMapping({"/", "viewToDoList"})
-    public String viewAllToDoItems(Model model) {
-        model.addAttribute("list", service.getAllDonner());
-
-
+    @GetMapping( "viewTDonnerList")
+    public String viewAllDonnerList(Model model) {
+        model.addAttribute("donner", service.getAllDonner());
         return "ViewToDoList.jsp";
     }
 
-    @PostMapping("/editSaveToDoItem")
-    public String editSaveToDoItem(DonnerRegistrationRequest todo, Model model) {
+    @GetMapping("/donner/new")
+    public String createDonnerForm(Model model) {
 
-        model.addAttribute("todo", todo);
+        // create donner object to hold donner form data
+        DonnerRegistrationRequest donnerRegistrationRequest = new DonnerRegistrationRequest();
+        model.addAttribute("donnerRequest", donnerRegistrationRequest);
+        return "create_donnerForm";
+
+    }
+
+    @PostMapping("donner")
+         public String donnerSave(DonnerRegistrationRequest donnerRegistrationRequest) {
+        service.saveDonner(donnerRegistrationRequest);
+        return "ViewToDoList";
+    }
+
+    @PostMapping("/donners/{id}")
+    public String editDonnerList(@PathVariable Long id, DonnerUpdateRequest donnerUpdateRequest) {
+       service.update(id,donnerUpdateRequest);
         return "EditToDonnerList.jsp";
     }
 
-
-
-    @GetMapping("/addToDoItem")
-    public String showAddForm(Model model, DonnerRegistrationRequest response) {
-        model.addAttribute("response", response);
-        return "DonnerADD.jsp";
-    }
-
-
-    @GetMapping("/addToDoItem")
-    public String addToDoItem(Model model) {
-        model.addAttribute("todo", new DonnerRegistrationRequest());
-
-        return "DonnerADD.jsp";
-    }
-
-    @PostMapping("/createDonner")
-    public String createDonner(DonnerRegistrationRequest request, Model model) {
-        if (service.saveDonner(request)) {
-            return "redirect:/viewToDoList";
-        }
-
-        model.addAttribute("request", request);
-        return "DonnerADD.jsp";
-    }
-
-
-    @GetMapping("/editToDoItem/{id}")
-    public String editToDoItem(@PathVariable Long id, Model model) {
-        model.addAttribute("todo", service.getDonnerDetails(id));
-
-        return "EditToDonnerList.jsp";
-    }
 
 
     @GetMapping("/deleteToDoItem/{id}")
-    public String deleteToDoItem(@PathVariable Long id, Model model) {
-        if (service.deleteToDoItem(id)) {
-            model.addAttribute("Delete Success");
-        } else {
-            model.addAttribute( "Delete Failure");
-        }
+    public String deleteToDoItem(@PathVariable Long id) {
+     service.deleteDonner(id);
         return "redirect:/viewToDoList.jsp";
     }
 

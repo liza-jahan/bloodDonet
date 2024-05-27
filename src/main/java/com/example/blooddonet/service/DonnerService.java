@@ -52,7 +52,7 @@ public class DonnerService {
         return false;
     }
 
-    public boolean deleteToDoItem(Long id) {
+    public boolean deleteDonner(Long id) {
         donnerRepository.deleteById(id);
 
         if (donnerRepository.findById(id).isEmpty()) {
