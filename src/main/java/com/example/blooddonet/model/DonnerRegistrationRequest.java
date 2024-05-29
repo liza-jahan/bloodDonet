@@ -17,14 +17,16 @@ public class DonnerRegistrationRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotBlank(message = "First name field is required")
+    @Column(name = "firstname", nullable = false)
     private String firstName;
-    @NotBlank(message = "Last name field is required")
+    @Column(name = "lastname", nullable = false)
     private String lastName;
-    @NotBlank(message = "Phone number field is required")
+    @Column(name = "phonenumber", nullable = false)
     private  String phoneNumber;
     @NotBlank(message = "BloodGroup field is required")
+    @Column(name = "bloodgroup")
     private  String bloodGroup;
+    @Column(name = "permanentAddress", nullable = false)
     private  String permanentAddress;
 
 

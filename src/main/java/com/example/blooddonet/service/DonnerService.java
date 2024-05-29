@@ -12,4 +12,5 @@ public interface DonnerService {
     boolean saveDonner(DonnerRegistrationRequest donnerRequest);
     boolean deleteDonner(Long id);
     List<DonnerEntity> getAllDonner();
+    List<DonnerEntity> getAllDonners();
 }

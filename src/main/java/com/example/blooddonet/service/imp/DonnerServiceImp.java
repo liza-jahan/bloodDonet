@@ -5,7 +5,6 @@ import com.example.blooddonet.model.DonnerRegistrationRequest;
 import com.example.blooddonet.model.DonnerUpdateRequest;
 import com.example.blooddonet.repository.DonnerRepository;
 import com.example.blooddonet.service.DonnerService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +12,11 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+
 public  class DonnerServiceImp implements DonnerService {
 
- private final DonnerRepository donnerRepository;
+@Autowired
+ private  DonnerRepository donnerRepository;
 
     @Override
     public DonnerEntity getDonnerDetails(Long id) {
@@ -64,13 +64,16 @@ public  class DonnerServiceImp implements DonnerService {
         return false;
     }
     @Override
-    public List<DonnerEntity> getAllDonner(){
+    public List<DonnerEntity> getAllDonners(){
 
         // TODO: 25/5/2024 incorporate pageable
 
         return donnerRepository.findAll();
     }
 
-
+    @Override
+    public List<DonnerEntity> getAllDonner() {
+        return donnerRepository.findAll();
+    }
 
 }
