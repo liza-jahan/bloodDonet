@@ -23,7 +23,10 @@ public class DonnerEntity {
     private String phoneNumber;
     private String bloodGroup;
     private String permanentAddress;
-    private Long createBy;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "create_by")
+    private UserEntity createBy;
     private Long updateBy;
     private Date createAt;
     private Date updateAt;

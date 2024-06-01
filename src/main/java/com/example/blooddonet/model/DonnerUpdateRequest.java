@@ -10,6 +10,7 @@ import java.util.Date;
 @Setter
 @Getter
 public class DonnerUpdateRequest {
+    private long id;
     private String phoneNumber;
     private String bloodGroup;
     private String permanentAddress;

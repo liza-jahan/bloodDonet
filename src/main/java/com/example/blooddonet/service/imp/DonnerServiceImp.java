@@ -1,10 +1,13 @@
 package com.example.blooddonet.service.imp;
 
 import com.example.blooddonet.entity.DonnerEntity;
+import com.example.blooddonet.entity.UserEntity;
 import com.example.blooddonet.model.DonnerRegistrationRequest;
 import com.example.blooddonet.model.DonnerUpdateRequest;
 import com.example.blooddonet.repository.DonnerRepository;
+import com.example.blooddonet.service.AuthntictionService;
 import com.example.blooddonet.service.DonnerService;
+import com.example.blooddonet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,19 +20,23 @@ public  class DonnerServiceImp implements DonnerService {
 
 @Autowired
  private  DonnerRepository donnerRepository;
-
+@Autowired
+private AuthntictionService authntictionService;
+@Autowired
+private UserService userService;
     @Override
     public DonnerEntity getDonnerDetails(Long id) {
         return donnerRepository.findById(id).orElseThrow(() -> new RuntimeException("Not"));
     }
     @Override
     public long update(Long id, DonnerUpdateRequest request) {
-        DonnerEntity donnerEntity= donnerRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        DonnerEntity donnerEntity= donnerRepository.findById(id).orElseThrow(() -> new RuntimeException("UserEntity not found"));
         donnerEntity.setBloodGroup(request.getBloodGroup());
         donnerEntity.setPhoneNumber(request.getPhoneNumber());
         donnerEntity.setUpdateAt(new Date());
         donnerEntity.setPermanentAddress(request.getPermanentAddress());
         donnerEntity.setAvailable(donnerEntity.isAvailable());
+        //donnerEntity.setId(request.getId());
         donnerRepository.save(donnerEntity);
         return donnerEntity.getId();
     }
@@ -41,9 +48,11 @@ public  class DonnerServiceImp implements DonnerService {
         donnerEntity.setBloodGroup(donnerRequest.getBloodGroup());
         donnerEntity.setPhoneNumber(donnerRequest.getPhoneNumber());
         donnerEntity.setPermanentAddress(donnerRequest.getPermanentAddress());
-        donnerEntity.setAvailable(false);
+        donnerEntity.setLastDonnetAt(donnerRequest.getLastDonnetAt());
+        donnerEntity.setAvailable(donnerRequest.isAvailable());
         donnerEntity.setCreateAt(new Date());
-        //   donnerEntity.setCreateBy();
+        UserEntity userEntity=userService.findUserByUsername(authntictionService.getCurrentUser().getUsername());
+        donnerEntity.setCreateBy(userEntity);
 
         donnerEntity = donnerRepository.save(donnerEntity);
 

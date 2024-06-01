@@ -8,10 +8,7 @@ import com.example.blooddonet.service.imp.DonnerServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 
@@ -31,40 +28,40 @@ public class DonnerController {
     public String createDonnerForm(Model model) {
 
         // create donner object to hold donner form data
-        DonnerRegistrationRequest donnerRegistrationRequest = new DonnerRegistrationRequest();
-        model.addAttribute("donnerRequest", donnerRegistrationRequest);
-        return "create_donnerForm";
+        DonnerRegistrationRequest donnerRequest = new DonnerRegistrationRequest();
+        model.addAttribute("donnerRequest", donnerRequest);
+        return "CreateDonnerForm";
 
     }
 
-    @PostMapping("/donner")
+    @PostMapping("/viewDonnerList")
          public String donnerSave(DonnerRegistrationRequest donnerRegistrationRequest) {
         service.saveDonner(donnerRegistrationRequest);
-        return "ViewToDoList";
+        return "redirect:/viewDonnerList";
     }
 
 
     @GetMapping("/donner/edit/{id}")
     public String editDonnerForm(@PathVariable Long id, Model model) {
-       service.getDonnerDetails(id);
-        return "edit_donner";
+
+        model.addAttribute("donnerEdit", service.getDonnerDetails(id));
+        return "EditDonnerInfo";
     }
 
 
-
-
-    @PostMapping("/donner/{id}")
-    public String editDonnerList(@PathVariable Long id, DonnerUpdateRequest donnerUpdateRequest) {
-       service.update(id,donnerUpdateRequest);
-        return "redirect:/EditToDonnerList";
+    @PutMapping("/donner/{id}")
+    public String editDonnerList(@PathVariable Long id, @ModelAttribute("donnerUpdateRequest") DonnerUpdateRequest donnerUpdateRequest) {
+        service.update(id, donnerUpdateRequest);
+        return "redirect:/viewDonnerList";
     }
+
 
 
 
     @GetMapping("/deleteDonner/{id}")
     public String deleteToDoItem(@PathVariable Long id) {
      service.deleteDonner(id);
-        return "redirect:/viewToDoList";
+        return "redirect:/viewDonnerList";
     }
 
 }
