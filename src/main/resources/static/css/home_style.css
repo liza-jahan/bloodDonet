@@ -1,0 +1,27 @@
+body {
+    margin: 0;
+    font-family: 'Arimo', sans-serif;
+    padding: 0;
+    height: 100%;
+    box-sizing: border-box;
+    background: yellowgreen url('../img/image2.jpg') no-repeat center top / cover;
+}
+
+.navbar {
+    background-color: blueviolet;
+    padding: 1.5rem 1.5rem;
+}
+
+.navbar-brand {
+    color: #ffcc00;
+}
+
+.navbar-nav .nav-link {
+    color: #ffbb00;
+}
+
+.nav-item.active .nav-link,
+.nav-item:focus .nav-link,
+.nav-item:hover .nav-link {
+    color: brown;
+}
